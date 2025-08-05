@@ -1,1 +1,38 @@
+/ {
+  keymap {
+    compatible = "zmk,keymap";
 
+    layout {
+      bindings = <
+        // CAMADA QWERTY (base)
+
+        // Mão esquerda
+        &kp Q       &kp W       &kp E       &kp R       &kp T
+        &kp A       &kp S       &kp D       &kp F       &kp G
+        &kp Z       &kp X       &kp C       &kp V       &kp B
+        &mo ACENTOS &kp LGUI    &kp LALT    &kp LSFT    &kp TAB
+
+        // Mão direita
+        &kp Y       &kp U       &kp I       &kp O       &kp P
+        &kp H       &kp J       &kp K       &kp L       &kp C_CEDIL
+        &kp N       &kp M       &kp COMMA   &kp DOT     &kp MINUS
+        &kp BSPC    &kp RSFT    &kp RALT    &kp RGUI    &kp ENTER
+
+
+        // CAMADA ACENTUAÇÃO (Raise ou ACENTOS)
+
+        // Mão esquerda
+        &kp ACUTE   &kp GRAVE   &kp CIRC    &kp TILDE   &none
+        &none       &none       &none       &none       &none
+        &none       &none       &none       &none       &none
+        &none       &none       &none       &none       &none
+
+        // Mão direita
+        &none       &none       &none       &kp C_CEDIL &none
+        &none       &none       &none       &none       &none
+        &none       &none       &none       &none       &none
+        &none       &none       &none       &none       &none
+      >;
+    };
+  };
+};
