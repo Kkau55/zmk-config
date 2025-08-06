@@ -1,33 +1,42 @@
-name: Build ZMK firmware
+name: Build firmware
 
 on:
   push:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build ZMK for Nice Nano V2
+    defaults:
+      run:
+        shell: bash
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Mostrar estrutura de diretórios
-        run: ls -R $GITHUB_WORKSPACE
+      - name: Mostrar estrutura da pasta config
+        run: ls -R $GITHUB_WORKSPACE/config
 
-      - name: Setup Zephyr environment
-        uses: zephyrproject-rtos/action-zephyr-setup@v1
-        with:
-          toolchains: arm-zephyr-eabi
-
-      - name: Initialize project
+      - name: Initialize west
         run: |
           cd $GITHUB_WORKSPACE
-          west init -l $GITHUB_WORKSPACE/config
+          west init -l config
           west update
 
       - name: Build firmware
-        run: west build -s ./zmk/app -d build/left -- -DSHIELD=nice_nano_v2
+        run: |
+          west build -s zmk/app -d build/left -b nice_nano -- -DSHIELD=aldeia_left
+          west build -s zmk/app -d build/right -b nice_nano -- -DSHIELD=aldeia_right
+
+      - name: Upload firmware (opcional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: firmware
+          path: |
+            build/left/zephyr/zmk.uf2
+            build/right/zephyr/zmk.uf2
