@@ -20,9 +20,9 @@ jobs:
           toolchains: arm-zephyr-eabi
 
       - name: Initialize project
-        run: |
-          west init -l ./config --mf west.yml
-          west update
+  run: |
+    west init -l $GITHUB_WORKSPACE/config
+    west update
 
       - name: Build firmware
         run: west build -s ./zmk/app -d build/left -- -DSHIELD=nice_nano_v2
