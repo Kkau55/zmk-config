@@ -1,4 +1,4 @@
-name: Build ZMK Firmware
+name: Build firmware
 
 on:
   push:
@@ -7,33 +7,28 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        board:
-          - nice_nano_v2
-          - nice_nano_v2
-        shield:
-          - left
-          - right
-
+        shield: [nice_nano, other_shield]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Clone ZMK firmware
+      - name: Set up Zephyr SDK
+        uses: zephyrproject-rtos/setup-zephyr@v1
+
+      - name: Build firmware
         run: |
-          west init -l config
+          west init -l app
           west update
-          west zephyr-export
-          west build -s zmk/app -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }}
+          west build -s app -b ${{ matrix.shield }} -- -DSHIELD=${{ matrix.shield }}
 
       - name: Upload firmware
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: firmware-${{ matrix.shield }}
           path: build/zephyr/zmk.uf2
