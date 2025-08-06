@@ -21,6 +21,8 @@ jobs:
 
       - name: Initialize project
   run: |
+  - name: Mostrar estrutura
+  run: ls -R $GITHUB_WORKSPACE
     west init -l $GITHUB_WORKSPACE/config
     west update
 
