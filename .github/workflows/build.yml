@@ -17,13 +17,14 @@ jobs:
       - name: Setup Zephyr environment
         uses: zephyrproject-rtos/action-zephyr-setup@v1
         with:
-          app-path: zmk-config/config
+          app-path: config
           toolchains: arm-zephyr-eabi
 
       - name: Initialize project
         run: |
-          west init -l zmk-config/config --mf west.yml
+          cd $GITHUB_WORKSPACE
+          west init -l ./config --mf west.yml
           west update
 
       - name: Build firmware
-        run: west build -s zmk-config/zmk/app -d build/left -- -DSHIELD=nice_nano_v2
+        run: west build -s zmk/app -d build/left -- -DSHIELD=nice_nano_v2
