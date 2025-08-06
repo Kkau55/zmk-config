@@ -10,9 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build ZMK for Nice Nano V2
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Mostrar estrutura de diretórios
+        run: ls -R $GITHUB_WORKSPACE
 
       - name: Setup Zephyr environment
         uses: zephyrproject-rtos/action-zephyr-setup@v1
@@ -20,11 +24,10 @@ jobs:
           toolchains: arm-zephyr-eabi
 
       - name: Initialize project
-  run: |
-  - name: Mostrar estrutura
-  run: ls -R $GITHUB_WORKSPACE
-    west init -l $GITHUB_WORKSPACE/config
-    west update
+        run: |
+          cd $GITHUB_WORKSPACE
+          west init -l $GITHUB_WORKSPACE/config
+          west update
 
       - name: Build firmware
         run: west build -s ./zmk/app -d build/left -- -DSHIELD=nice_nano_v2
