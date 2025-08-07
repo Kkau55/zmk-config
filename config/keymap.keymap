@@ -1,7 +1,7 @@
 keymap {
   compatible = "zmk,keymap";
 
-  layer {
+  layers {
     base_layer {
       bindings = <
         &kp Q &kp W &kp E &kp R &kp T
