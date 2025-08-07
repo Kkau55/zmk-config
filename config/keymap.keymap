@@ -1,38 +1,90 @@
-/ {
-  keymap {
-    compatible = "zmk,keymap";
+keymap {
+  compatible = "zmk,keymap";
 
-    layout {
+  layout {
+    base_layer {
       bindings = <
-        // CAMADA QWERTY (base)
-
-        // Mão esquerda
-        &kp Q       &kp W       &kp E       &kp R       &kp T
-        &kp A       &kp S       &kp D       &kp F       &kp G
-        &kp Z       &kp X       &kp C       &kp V       &kp B
-        &mo ACENTOS &kp LGUI    &kp LALT    &kp LSFT    &kp TAB
-
-        // Mão direita
-        &kp Y       &kp U       &kp I       &kp O       &kp P
-        &kp H       &kp J       &kp K       &kp L       &kp C_CEDIL
-        &kp N       &kp M       &kp COMMA   &kp DOT     &kp MINUS
-        &kp BSPC    &kp RSFT    &kp RALT    &kp RGUI    &kp ENTER
-
-
-        // CAMADA ACENTUAÇÃO (Raise ou ACENTOS)
-
-        // Mão esquerda
-        &kp ACUTE   &kp GRAVE   &kp CIRC    &kp TILDE   &none
-        &none       &none       &none       &none       &none
-        &none       &none       &none       &none       &none
-        &none       &none       &none       &none       &none
-
-        // Mão direita
-        &none       &none       &none       &kp C_CEDIL &none
-        &none       &none       &none       &none       &none
-        &none       &none       &none       &none       &none
-        &none       &none       &none       &none       &none
+        &kp Q &kp W &kp E &kp R &kp T
+        &kp A &kp S &kp D &kp F &kp G
+        &kp Z &kp X &kp C &kp V &kp B
+        &lt NAV CAPS &lt SYM COMMA &lt NUM DOT &lt MACRO TAB &lt FUN APP
       >;
     };
+
+    nav_layer {
+      bindings = <
+        &kp LEFT &kp UP &kp DOWN &kp RIGHT &kp HOME
+        &kp PG_UP &kp PG_DN &kp END &kp TAB &kp DEL
+        &kp BSPC &kp INS &kp CAPS &kp ESC &to BASE
+      >;
+    };
+
+    sym_layer {
+      bindings = <
+        &kp EXCL &kp AT &kp HASH &kp DLR &kp PERC
+        &kp CARET &kp AMPS &kp STAR &kp LPAR &kp RPAR
+        &kp LBRACKET &kp RBRACKET &kp LBRACE &kp RBRACE &kp PIPE
+        &kp TILDE &kp UNDERS &kp PLUS &kp MINUS &to BASE
+      >;
+    };
+
+    num_layer {
+      bindings = <
+        &kp 1 &kp 2 &kp 3 &kp 4 &kp 5
+        &kp 6 &kp 7 &kp 8 &kp 9 &kp 0
+        &kp DOT &kp COMMA &kp EQUAL &kp SLASH &kp COLON
+        &kp SEMI &kp ASTRK &kp MINUS &kp PLUS &to BASE
+      >;
+    };
+
+    fun_layer {
+      bindings = <
+        &kp F1 &kp F2 &kp F3 &kp F4 &kp F5
+        &kp F6 &kp F7 &kp F8 &kp F9 &kp F10
+        &kp F11 &kp F12 &kp PSCR &kp SLCK &kp PAUS
+        &kp MENU &kp APP &kp ESC &kp TAB &to BASE
+      >;
+    };
+
+    macro_layer {
+      bindings = <
+        &mt CTRL C &mt CTRL V &mt CTRL Z &mt CTRL X &mt CTRL A
+        &mt CTRL S &mt CTRL P &mt CTRL N &mt CTRL T &mt CTRL W
+        &mt CTRL F &mt CTRL H &mt CTRL D &mt CTRL Q &mt CTRL E
+        &macro_paste_value &kp TAB &kp ENTER &kp BSPC &to BASE
+      >;
+    };
+  };
+
+  encoder_left {
+    compatible = "zmk,behavior-encoder";
+    bindings = <
+      &kp PG_DN
+      &kp PG_UP
+    >;
+  };
+
+  encoder_right {
+    compatible = "zmk,behavior-encoder";
+    bindings = <
+      &mt CTRL TAB
+      &mt CTRL LS(TAB)
+    >;
+  };
+
+  encoder_left_button {
+    compatible = "zmk,behavior-tap";
+    bindings = <&mo NAV>;
+  };
+
+  encoder_right_button {
+    compatible = "zmk,behavior-macro";
+    bindings = <
+      &mt CTRL ALT V
+      &delay-ms 100
+      &kp V
+      &delay-ms 100
+      &kp ENTER
+    >;
   };
 };
